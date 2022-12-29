@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import Question, Answer, Choice
+from .models import Question, Answer, Choice, Category
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = (
+        'category',
+    )
 
 
 class QuestionAdmin(admin.ModelAdmin):
@@ -32,3 +38,4 @@ class AnswerAdmin(admin.ModelAdmin):
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Choice, ChoiceAdmin)
 admin.site.register(Answer, AnswerAdmin)
+admin.site.register(Category, CategoryAdmin)
