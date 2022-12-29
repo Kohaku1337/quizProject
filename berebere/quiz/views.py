@@ -1,26 +1,30 @@
-from .serialz import QuestionSerializer, AnswerSerializer
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import GenericAPIView
-from rest_framework.response import Response
-from .models import Question
+from django.shortcuts import render
+from rest_framework import viewsets
+from .models import *
+from django.http import HttpResponse
+from .serialz import *
 
 
-class GetQuestion(GenericAPIView):
-    permission_classes = (IsAuthenticated,)
+def index(request):
+    return HttpResponse("<h4>Опрос</h4>")
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class QuestionViewSet(viewsets.ModelViewSet):
+    queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
-    def get(self, request, format=None):
-        questions = Question.objects.filter(visible=True, )
-        last_point = QuestionSerializer(questions, many=True)
-        return Response(last_point.data)
+
+class ChoiceViewSet(viewsets.ModelViewSet):
+    queryset = Choice.objects.all()
+    serializer_class = ChoiceSerializer
 
 
-class QuestionAnswer(GenericAPIView):
-    permission_classes = (IsAuthenticated,)
+class AnswerViewSet(viewsets.ModelViewSet):
+    queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
 
-    def post(self, request, format=None):
-        answer = AnswerSerializer(data=request.data, context=request)
-        if answer.is_valid(raise_exception=True):
-            answer.save()
-            return Response({'result': 'OK'})

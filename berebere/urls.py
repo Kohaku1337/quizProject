@@ -13,16 +13,32 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import imp
+from berebere.quiz import views
 from django.contrib import admin
 from berebere.quiz.views import *
-from accounts.views import *
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from accounts.views import *
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'Category', CategoryViewSet)
+router.register(r'Question', QuestionViewSet)
+router.register(r'Choice', ChoiceViewSet)
+router.register(r'Answer', AnswerViewSet)
+
+urlpatterns = [
+    path('', views.index)
+]
+router_ = [
+    path('project/', include(router.urls))
+]
+
+admin.autodiscover()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.jwt')),
-    path("api/accounts/", include("accounts.urls")),
-    path('api-auth/', include('rest_framework.urls')),
+    path('', include(router_)),
+    path('login/', AuthorizationUserView.as_view(), name='login'),
+    path('registr/', RegistrationUserView.as_view(), name='registr'),
 ]
