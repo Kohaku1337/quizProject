@@ -4,7 +4,7 @@ from .models import Question, Answer, Choice, Category
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
-        'category',
+        'title',
     )
 
 

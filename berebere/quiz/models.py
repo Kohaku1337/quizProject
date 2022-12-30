@@ -1,11 +1,9 @@
-from turtle import title
-from unicodedata import category
 from django.db import models
 from django.conf import settings
 
 
 class Category(models.Model):
-    category = models.CharField(max_length=4096)
+    title = models.CharField(max_length=4096)
 
     def __str__(self):
         return self.title

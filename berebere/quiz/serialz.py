@@ -5,22 +5,22 @@ from .models import Answer, Question, Choice, Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = 'all'
+        fields = '__all__'
 
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = 'all'
+        fields = '__all__'
 
 
 class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Choice
-        fields = 'all'
+        fields = '__all__'
 
 
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
-        fields = 'all'
+        fields = '__all__'
